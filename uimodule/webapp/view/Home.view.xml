@@ -1,0 +1,60 @@
+<mvc:View
+    controllerName="irpastarter.searchDuck.controller.Home"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns:cards="sap.f.cards"
+    xmlns:form="sap.ui.layout.form"
+    xmlns:f="sap.f"
+    displayBlock="true"
+    xmlns="sap.m">
+
+    <Page id="page" title="Teste" showHeader="false">
+        <content>
+            <FlexBox fitContainer="true" justifyContent="Center" alignItems="{= ${device>/system/phone} ? 'Start' : 'Center'}">
+                <f:Card id="card-form">
+                    <f:header>
+                        <cards:Header title="Teste">
+                        </cards:Header>
+                    </f:header>
+                    <f:content>
+                      <VBox class="sapUiSmallMargin">
+                            <form:Form id="automation-form">
+                                <form:layout>
+                                    <form:ResponsiveGridLayout labelSpanXL="3" labelSpanL="3" labelSpanM="3" labelSpanS="12" adjustLabelSpan="false" emptySpanXL="4" emptySpanL="4" emptySpanM="4" emptySpanS="0" columnsXL="1" columnsL="1" columnsM="1" singleContainerFullSize="false" />
+                                </form:layout>
+                                <form:formContainers>
+                                    <form:FormContainer>
+                                        <form:formElements>
+                                            <form:FormElement label="{i18n>labelName}">
+                                                <form:fields>
+                                                    <Input value="{ViewModel>/input/Username}" editable="false"/>
+                                                </form:fields>
+                                            </form:FormElement>
+                                            <form:FormElement label="{i18n>labelInitialDate}">
+                                                <form:fields>
+                                                    <DatePicker id="date-picker-start" value="{ViewModel>/input/Data_de}" required="true" placeholder="{i18n>placeHolderDates}" change="handleStartDateChange" valueFormat="dd.MM.yyyy" displayFormat="dd/MM/yyyy"/>
+                                                </form:fields>
+                                            </form:FormElement>
+                                            <form:FormElement label="{i18n>labelFinalDate}">
+                                                <form:fields>
+                                                    <DatePicker id="date-picker-end" required="true" value="{ViewModel>/input/Data_ate}" placeholder="{i18n>placeHolderDates}" change="validateDateField" valueFormat="dd.MM.yyyy" displayFormat="dd/MM/yyyy"/>
+                                                </form:fields>
+                                            </form:FormElement>
+                                            <form:FormElement label="{i18n>labelDocDate}">
+                                                <form:fields>
+                                                    <DatePicker id="date-picker-doc" required="true" value="{ViewModel>/input/Data_doc}" placeholder="{i18n>placeHolderDates}" change="validateDateField" valueFormat="dd.MM.yyyy" displayFormat="dd/MM/yyyy"/>
+                                                </form:fields>
+                                            </form:FormElement>
+                                        </form:formElements>
+                                    </form:FormContainer>
+                                </form:formContainers>
+                            </form:Form>
+                            <HBox justifyContent="End" class="sapUiSmallMarginTop">
+                                <Button text="{i18n>buttonStart}" type="Emphasized" press="handleSendAutomation"/>
+                            </HBox>
+                        </VBox>
+                    </f:content>
+                </f:Card>
+            </FlexBox>
+        </content>
+    </Page>
+</mvc:View>

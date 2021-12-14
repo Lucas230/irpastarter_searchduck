@@ -4,7 +4,7 @@ sap.ui.require([
 ], function (Opa5, Press) {
   "use strict";
 
-  var sViewName = "irpastarter.searchDuck.view.MainView";
+  var sViewName = "irpastarter.searchDuck.view.App";
 
   Opa5.createPageObjects({
     onTheMainPage: {

@@ -1,0 +1,12 @@
+ <mvc:View controllerName="irpastarter.searchDuck.controller.App"
+    displayBlock="true"
+    xmlns="sap.m"
+    xmlns:mvc="sap.ui.core.mvc">
+    
+  <Shell id="shell">
+        <App id="app">
+            <pages>
+            </pages>
+        </App>
+    </Shell>
+</mvc:View>

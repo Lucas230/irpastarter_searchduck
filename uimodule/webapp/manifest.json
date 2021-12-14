@@ -43,7 +43,7 @@
   "sap.ui5": {
     "flexEnabled": true,
     "rootView": {
-      "viewName": "irpastarter.searchDuck.view.MainView",
+      "viewName": "irpastarter.searchDuck.view.App",
       "type": "XML",
       "async": true,
       "id": "idAppControl"
@@ -79,28 +79,34 @@
       "config": {
         "routerClass": "sap.m.routing.Router",
         "viewType": "XML",
+        "async": true,
         "viewPath": "irpastarter.searchDuck.view",
-        "controlId": "idAppControl",
         "controlAggregation": "pages",
-        "async": true
+        "controlId": "app",
+        "clearControlAggregation": false
       },
       "routes": [
         {
-          "name": "RouteMainView",
-          "pattern": "RouteMainView",
-          "target": [
-            "TargetMainView"
-          ]
+          "name": "RouteHome",
+          "pattern": "",
+          "target": ["TargetHome"]
         }
       ],
       "targets": {
-        "TargetMainView": {
+        "TargetHome": {
           "viewType": "XML",
-          "viewLevel": 1,
-          "viewId": "idAppControl",
-          "viewName": "MainView"
+          "transition": "slide",
+          "clearControlAggregation": false,
+          "viewId": "Home",
+          "viewName": "Home"
         }
       }
+    },
+    "rootView": {
+      "viewName": "irpastarter.searchDuck.view.App",
+      "type": "XML",
+      "async": true,
+      "id": "App"
     }
   },
   "sap.cloud": {
