@@ -1,6 +1,13 @@
 {
-  "welcomeFile": "/flpSandbox.html",
+  "welcomeFile": "/index.html",
   "routes": [
+    {
+      "source": "^/IRPA-SearchDuckGo/(.*)$",
+      "target": "$1",
+      "destination": "IRPA-SearchDuckGo",
+      "authenticationType": "none",
+      "csrfProtection": false
+    },
     {
       "source": "^(.*)",
       "target": "$1",

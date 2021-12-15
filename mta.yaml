@@ -12,6 +12,7 @@ modules:
         parameters:
           content-target: true
     build-parameters:
+      ignore: ["default-env.json"]
       build-result: resources
       requires:
         - name: uimodule

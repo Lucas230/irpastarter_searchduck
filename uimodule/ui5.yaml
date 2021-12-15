@@ -24,6 +24,7 @@ server:
     - name: ui5-middleware-cfdestination
       afterMiddleware: compression
       configuration:
+        allowServices: true
         debug: true
         port: 1091
         xsappJson: uimodule/webapp/xs-app.json

@@ -17,78 +17,15 @@ sap.ui.define(
             let oCardForm = this.getView().byId("card-form");
             oCardForm.setBusy(true);
   
-            let oUserInfo = await this.getUserInfo();
             let oData = {
               invocationContext: "${invocation_context}",
               input: {
-                Username: oUserInfo.displayName,
-                Data_de: null,
-                Data_ate: null,
-                Data_doc: null,
+                search: ""
               },
             };
             this.setModel(new JSONModel(oData), "ViewModel");
   
-            let oCurrentDate = new Date();
-            let oStartDatePicker = this.byId("date-picker-start");
-            let oEndDatePicker = this.byId("date-picker-end");
-  
-            oStartDatePicker.setDateValue(oCurrentDate);
-            //oStartDatePicker.setMinDate(oCurrentDate);
-            oEndDatePicker.setMinDate(oCurrentDate);
-  
             oCardForm.setBusy(false);
-          },
-  
-          getUserInfo: async function () {
-            let oMockUserInfo = {
-              firstname: "Default",
-              lastname: "User",
-              email: "default.user@teste.com",
-              name: "default.user@teste.com",
-              displayName: "Default User (default.user@teste.com)",
-            };
-  
-            try {
-              let response = await fetch(
-                this.getBaseURL() + "/user-api/currentUser"
-              );
-              let parsed = await response.json();
-              if (!response.ok) {
-                return oMockUserInfo;
-              } else {
-                return parsed;
-              }
-            } catch (error) {
-              return oMockUserInfo;
-            }
-          },
-  
-          handleStartDateChange: function (oEvent) {
-            let bValid = this.validateDateField(oEvent);
-            if (bValid) {
-              let oStartDate = oEvent.getSource().getDateValue();
-              let oEndDatePicker = this.byId("date-picker-end");
-              if (oEndDatePicker.getDateValue() < oStartDate) {
-                oEndDatePicker.setValue(null);
-                oEndDatePicker.setMinDate(oStartDate);
-              }
-            }
-          },
-  
-          validateDateField: function (oEvent) {
-            let oField = oEvent.getSource();
-            let bValid;
-            if (oField.getValue() && oField.isValidValue()) {
-              oField.setValueState("None");
-              oField.setValueStateText("");
-              bValid = true;
-            } else {
-              oField.setValueState("Error");
-              oField.setValueStateText("");
-              bValid = false;
-            }
-            return bValid;
           },
   
           handleSendAutomation: async function (oEvent) {
@@ -110,18 +47,6 @@ sap.ui.define(
             }
           },
   
-          enableFormFields: function (bValue) {
-            let oAutomationForm = this.byId("automation-form");
-            let oFormContainer = oAutomationForm.getFormContainers()[0];
-            let aFields = [];
-            oFormContainer.getFormElements().forEach((oFormElement) => {
-              aFields.push(...oFormElement.getFields());
-            });
-            aFields.forEach((oField) => {
-              oField.setEnabled(bValue);
-            });
-          },
-  
           startAutomation: async function () {
             let oHeaders = new Headers();
             oHeaders.append("Content-Type", "application/json");
@@ -136,22 +61,22 @@ sap.ui.define(
   
             try {
               let response = await fetch(
-                this.getBaseURL() + "/Natura-IRPA-EstoqueNegativo/runs",
+                this.getBaseURL() + "/IRPA-SearchDuckGo/runs",
                 oRequestOptions
               );
               let parsed = await response.json();
               if (!response.ok) {
-                MessageBox.error(this.getI18nText("msgBoxError"));
+                MessageBox.error("Erro ao iniciar automação:" + error.toString());
               } else {
                 //MessageBox.success(this.getI18nText("msgBoxSuccess"));
-                MessageBox.success(this.getI18nText("msgBoxSuccess"), {
+                MessageBox.success("Automação inciada com sucesso!", {
                   onClose: () => {
                     this.handleRouteMatched();
                   },
                 });
               }
             } catch (error) {
-              MessageBox.error(this.getI18nText("msgBoxError"));
+              MessageBox.error("Erro ao iniciar automação:" + error.toString());
             }
           },
   
@@ -165,8 +90,7 @@ sap.ui.define(
   
             let aValid = [];
             aFields.forEach((oField) => {
-              if (oField.getId().includes("date-picker")) {
-                if (oField.getValue() && oField.isValidValue()) {
+                if (oField.getValue()) {
                   oField.setValueState("None");
                   aValid.push(true);
                 } else {
@@ -174,12 +98,22 @@ sap.ui.define(
                   oField.setValueStateText("");
                   aValid.push(false);
                 }
-              }
             });
   
             return aValid.every((element) => element);
           },
-  
+          
+          enableFormFields: function (bValue) {
+            let oAutomationForm = this.byId("automation-form");
+            let oFormContainer = oAutomationForm.getFormContainers()[0];
+            let aFields = [];
+            oFormContainer.getFormElements().forEach((oFormElement) => {
+              aFields.push(...oFormElement.getFields());
+            });
+            aFields.forEach((oField) => {
+              oField.setEnabled(bValue);
+            });
+        },
           getBaseURL: function () {
             let appId = this.getOwnerComponent().getManifestEntry("/sap.app/id");
             let appPath = appId.replaceAll(".", "/");
